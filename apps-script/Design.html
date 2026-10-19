@@ -1,0 +1,38 @@
+<!--
+  Design der Kundenseite. EINZIGE Stelle für Farben, Schrift, Radien und Logogröße.
+  Die Einrichtung (/einrichten) passt diese Datei an das Design-Skill oder die Markenvorgaben an.
+  Neutrale Vorgabe: Schiefergrau mit Petrol-Akzent, Systemschrift Inter.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Markenfarbe: Hero, Knöpfe, Links, Fokusring */
+  --marke:#1f3a4d;
+  --marke-dunkel:#152a38;      /* Hover der Knöpfe, Schattenton */
+  --marke-verlauf:#2a5068;     /* Mitte des Hero-Verlaufs */
+  --marke-mittel:#3b6a85;      /* Ende des Hero-Verlaufs, Rahmen bei Fehlern */
+  --marke-blass:#cfdbe3;
+  --marke-hell:#eaf1f5;        /* Flächen bei Hover, Eingabefelder */
+  --hero-akzent:#9fd3df;       /* hervorgehobenes Wort im Hero-Titel */
+
+  /* Akzent: Abschnittsnummern, Fußlinie, Datenschutz-Kasten */
+  --akzent:#c98a3c;
+  --akzent-hell:#fbf4ea;
+
+  /* Statusfarbe "erledigt". Nur für Bestätigungen, nie für Knöpfe. Ist die Marke selbst grün,
+     hier einen deutlich anderen Ton wählen (z. B. Blaugrün), sonst verschwimmt der Status. */
+  --gruen:#16a34a; --gruen-hell:#86c9a4; --gruen-50:#eef7f1;
+
+  /* Neutrale Töne */
+  --black:#111418; --gray-700:#333a40; --gray-500:#5f6b74; --gray-400:#9aa4ac;
+  --gray-200:#e3e7ea; --gray-100:#f3f5f6; --light:#f3f5f6; --white:#ffffff;
+
+  /* Schrift und Formen */
+  --schrift:'Inter', Arial, sans-serif;
+  --rad-gross:18px; --rad-mittel:12px; --rad-klein:9px;
+  --rad-knopf:999px;           /* Knöpfe und Schalter: 999px = Pille, 0 bis 6px = eckig */
+  --logo-hoehe:34px;
+}
+</style>

@@ -1,0 +1,56 @@
+<!--
+  HTML-Rahmen aller Kundenmails. Farben kommen aus Design.html (f.marke usw.), der Inhalt aus dem
+  Blatt Mailtexte. Mailprogramme verstehen kein modernes CSS: deshalb Tabellen und Inline-Stile,
+  keine CSS-Variablen, keine Webfonts als Pflicht. Logo nur als https-Adresse (Gmail blockt data:).
+-->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title><?= betreff ?></title>
+</head>
+<body style="margin:0; padding:0; background:<?= f.flaeche ?>;">
+<div style="display:none; max-height:0; overflow:hidden; opacity:0;"><?= vorschau ?></div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:<?= f.flaeche ?>;">
+  <tr>
+    <td align="center" style="padding:28px 12px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"
+             style="width:100%; max-width:600px; background:#ffffff; border-radius:<?= f.radius ?>; overflow:hidden; border:1px solid <?= f.linie ?>;">
+        <tr>
+          <td style="background:<?= f.marke ?>; background-image:linear-gradient(135deg, <?= f.marke ?> 0%, <?= f.verlauf ?> 60%, <?= f.mittel ?> 100%); padding:28px 36px 26px;">
+            <? if (logo) { ?>
+              <img src="<?= logo ?>" alt="<?= firma.name ?>" height="32" style="display:block; height:32px; width:auto; border:0;">
+            <? } else { ?>
+              <div style="font-family:<?!= f.schrift ?>; font-size:19px; font-weight:700; color:#ffffff; letter-spacing:-0.01em;"><?= firma.name ?></div>
+            <? } ?>
+            <div style="font-family:<?!= f.schrift ?>; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.78); margin-top:14px;"><?= eyebrow ?></div>
+          </td>
+        </tr>
+        <tr><td style="height:3px; line-height:3px; font-size:0; background:<?= f.akzent ?>;">&nbsp;</td></tr>
+        <tr>
+          <td style="padding:34px 36px 10px; font-family:<?!= f.schrift ?>; font-size:15px; line-height:1.65; color:<?= f.text ?>;">
+            <?!= inhalt ?>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:6px 36px 32px; font-family:<?!= f.schrift ?>; font-size:15px; line-height:1.6; color:<?= f.text ?>;">
+            <?!= signatur ?>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:<?= f.flaeche ?>; border-top:1px solid <?= f.linie ?>; padding:20px 36px; font-family:<?!= f.schrift ?>; font-size:12px; line-height:1.6; color:<?= f.grau ?>;">
+            <strong style="color:<?= f.text ?>;"><?= firma.name ?></strong><? if (firma.adresse) { ?> · <?= firma.adresse ?><? } ?><br>
+            <?= [firma.telefon, firma.email, firma.website].filter(String).join(' · ') ?>
+          </td>
+        </tr>
+      </table>
+      <div style="max-width:600px; font-family:Arial, Helvetica, sans-serif; font-size:11px; line-height:1.5; color:<?= f.grau ?>; padding:14px 12px 0;">
+        Diese Nachricht enthält einen persönlichen Link. Bitte nicht weiterleiten.
+      </div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

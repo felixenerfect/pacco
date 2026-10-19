@@ -1,0 +1,8 @@
+vorlage;gruppe;gruppe_untertitel;titel;hinweis;erwartet;gehoert_zu;frage;block_name;block_feld
+Beispiel;Allgemeine Unterlagen;Zu Ihrer Person;Ausweisdokument;Vorder- und Rückseite;1;;;;
+Beispiel;Allgemeine Unterlagen;Zu Ihrer Person;Unterschriebene Vollmacht;Vorlage liegt der Einladung bei;1;;;;
+Beispiel;Allgemeine Unterlagen;Zu Ihrer Person;Rechnungen des letzten Jahres;Je Rechnung eine Datei;3;;;;
+Beispiel;Allgemeine Unterlagen;Zu Ihrer Person;Weitere Objekte;;1;;Gibt es weitere Objekte?;Objekt;Adresse oder Bezeichnung
+Beispiel;Allgemeine Unterlagen;Zu Ihrer Person;Fotos;;1;Weitere Objekte;;;
+Beispiel;Allgemeine Unterlagen;Zu Ihrer Person;Unterlagen zum Objekt;;1;Weitere Objekte;;;
+Beispiel;Sonstiges;Was sonst noch hilft;Weitere Nachweise;Falls vorhanden;1;;;;

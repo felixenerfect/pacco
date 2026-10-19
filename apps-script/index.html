@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<!-- Upload-Strecke · Kundenseite. Farben, Schrift, Radien: Design.html · Wortlaut: Texte.gs -->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?= firma.name ?> · <?= t.seitentitel ?></title>
+<?!= include('Design') ?>
+<style>
+:root{
+  /* Markenfarben, Schrift und Radien stehen in Design.html. Hier nur abgeleitete Werte. */
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --ease-drawer:cubic-bezier(.32,.72,0,1);
+  --ring:0 0 0 3px color-mix(in srgb, var(--marke) 22%, transparent);
+  --hair:rgba(15,20,25,.07);
+  --schatten-1:0 1px 2px rgba(15,20,25,.04);
+  --schatten-2:0 1px 2px rgba(15,20,25,.04), 0 10px 28px -14px color-mix(in srgb, var(--marke-dunkel) 16%, transparent);
+  --schatten-3:0 2px 4px rgba(15,20,25,.05), 0 18px 44px -18px color-mix(in srgb, var(--marke-dunkel) 22%, transparent);
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}   /* hidden schlägt jede display-Regel */
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--light); color:var(--gray-500);
+  font-family:var(--schrift); font-size:15px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:var(--schrift); letter-spacing:-.01em; margin:0}
+.shell{max-width:760px; margin:0 auto; padding:28px 20px 40px}
+.eyebrow{
+  font-family:var(--schrift); font-size:11px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--akzent);
+  margin:0 0 8px; display:block;
+}
+
+/* ---------- Hero ---------- */
+.heroshell{
+  /* Aussenschale: der Hero sitzt in einer Wanne, die Radien laufen konzentrisch. */
+  padding:7px; border-radius:calc(var(--rad-gross) + min(7px, var(--rad-gross)));
+  background:color-mix(in srgb, var(--marke) 5%, transparent); border:1px solid color-mix(in srgb, var(--marke) 10%, transparent);
+}
+.hero{
+  position:relative; overflow:hidden; border-radius:var(--rad-gross);
+  background:linear-gradient(135deg,var(--marke) 0%,var(--marke-verlauf) 50%,var(--marke-mittel) 100%);
+  padding:34px 36px 32px; color:#fff;
+  box-shadow:var(--schatten-3), inset 0 1px 0 rgba(255,255,255,.14);
+}
+.hero-inner{position:relative; z-index:2}
+.hero img.logo{height:var(--logo-hoehe); width:auto; max-width:220px; display:block; margin-bottom:26px}
+.hero .wortmarke{display:block; font-size:18px; font-weight:700; letter-spacing:-.01em; color:#fff; margin-bottom:26px}
+.hero .eyebrow{color:rgba(255,255,255,.82); letter-spacing:.14em; margin-bottom:8px}
+.hero h1{font-weight:800; font-size:clamp(28px,4.4vw,40px); line-height:1.1; letter-spacing:-.04em; color:#fff; margin:0 0 12px}
+.hero h1 em{font-style:normal; font-weight:800; color:var(--hero-akzent)}
+.hero p.lead{font-weight:400; font-size:16px; line-height:1.5; color:rgba(255,255,255,.85); max-width:42ch; margin:0}
+.meta{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:26px}
+.meta div{border-top:1px solid rgba(255,255,255,.2); padding-top:10px}
+.meta .k{font-family:var(--schrift); font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.72); display:block}
+.meta .v{font-size:14px; color:#fff; display:block; margin-top:3px}
+
+/* ---------- Karten ---------- */
+.card{
+  background:var(--white); border:2px solid var(--gray-200); border-radius:var(--rad-gross);
+  padding:26px 28px; margin-top:18px; box-shadow:var(--schatten-1);
+}
+.card h2{font-size:18px; font-weight:500; color:var(--black); margin:0 0 4px}
+.card p.sub{font-size:14px; margin:0 0 4px; color:var(--gray-500)}
+
+/* ---------- Fortschritt ---------- */
+.status{display:flex; align-items:baseline; justify-content:space-between; gap:12px}
+.status .zahl{font-family:var(--schrift); font-size:16px; font-weight:500; color:var(--black)}
+.status .rest{font-size:13px; color:var(--gray-500)}
+.bar{height:7px; border-radius:99px; background:var(--gray-100); overflow:hidden; margin-top:14px;
+  box-shadow:inset 0 1px 2px rgba(15,20,25,.06)}
+.bar span{display:block; height:100%; width:0%; background:var(--gruen); transition:width 420ms var(--ease-out)}
+.hint{font-size:13px; color:var(--gray-500); margin:12px 0 0}
+
+/* ---------- Checklistenzeilen (bewusst leise) ---------- */
+ul.docs{list-style:none; margin:6px 0 0; padding:0}
+ul.docs>li{
+  display:grid; grid-template-columns:22px 1fr auto; gap:0 10px; align-items:start;
+  padding:11px 0; border-bottom:1px solid rgba(15,20,25,.05);
+}
+ul.docs>li:last-child{border-bottom:none}
+ul.docs>li{border-radius:var(--rad-klein)}
+/* Erledigt heisst sichtbar erledigt: die ganze Zeile faerbt sich leicht gruen,
+   nicht nur die Dateizeile darin. */
+ul.docs>li[data-state="angekommen"],
+ul.docs>li[data-state="geprueft"]{
+  background:var(--gruen-50); box-shadow:inset 2px 0 0 var(--gruen-hell);
+  padding-left:10px; margin-left:-10px; padding-right:10px; margin-right:-10px;
+  border-bottom-color:rgba(22,163,74,.14);
+}
+ul.docs>li[data-state="angekommen"]:last-child,
+ul.docs>li[data-state="geprueft"]:last-child{border-bottom-color:transparent}
+@media (hover:hover) and (pointer:fine){
+  /* Bei 760 px Kartenbreite liegen Titel und Aktion weit auseinander.
+     Die Hover-Flaeche zeigt, welche Aktion zu welcher Zeile gehoert. */
+  ul.docs>li{transition:background-color 140ms ease}
+  ul.docs>li:hover{background:var(--light)}
+  ul.docs>li[data-state="angekommen"]:hover,
+  ul.docs>li[data-state="geprueft"]:hover{background:var(--gruen-50)}
+}
+.nr{
+  position:relative; font-size:12px; color:var(--gray-500); font-variant-numeric:tabular-nums;
+  text-align:right; padding-top:2px; line-height:1.5;
+}
+.mark{display:none; position:relative; width:16px; height:16px; vertical-align:-3px; margin-right:5px}
+li[data-state="angekommen"] .mark, li[data-state="geprueft"] .mark{display:inline-block}
+.mark svg{position:absolute; left:0; top:0; width:16px; height:16px; opacity:0; transform:scale(.9);
+  transition:opacity 200ms var(--ease-out), transform 240ms var(--ease-out)}
+.mark svg path{stroke:var(--gruen); stroke-width:2.2; fill:none; stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:22; stroke-dashoffset:22; transition:stroke-dashoffset 300ms 60ms var(--ease-out)}
+li[data-state="angekommen"] .mark svg, li[data-state="geprueft"] .mark svg{opacity:1; transform:scale(1)}
+li[data-state="angekommen"] .mark svg path, li[data-state="geprueft"] .mark svg path{stroke-dashoffset:0}
+li[data-state="angekommen"] .mark svg path{stroke:var(--gruen-hell)}
+.doc-title{font-size:14px; font-weight:500; color:var(--black); display:block; line-height:1.45}
+.doc-hint{font-size:12.5px; color:var(--gray-500); display:block; line-height:1.45}
+.doc-status{font-size:12.5px; color:var(--gray-500); display:block}
+li[data-state="angekommen"] .doc-status{color:var(--gruen)}
+li[data-state="teilweise"] .doc-status{color:var(--gray-700)}
+li[data-state="angekommen"] .nr, li[data-state="geprueft"] .nr{color:var(--gray-700)}
+li[data-state="geprueft"] .doc-status{color:var(--gruen)}
+li[data-state="geprueft"] .doc-title{color:var(--gray-700); font-weight:400}
+.doc-actions{display:flex; gap:2px; align-items:center}
+
+/* ---------- Buttons ---------- */
+.btn{
+  font-family:var(--schrift); font-weight:500; font-size:14px; letter-spacing:.02em;
+  border-radius:var(--rad-knopf); padding:12px 14px 12px 22px; border:none; cursor:pointer; color:#fff;
+  display:inline-flex; align-items:center; gap:12px;
+  background:var(--marke);
+  box-shadow:0 1px 0 rgba(255,255,255,.16) inset, 0 8px 24px -10px color-mix(in srgb, var(--marke) 35%, transparent);
+  transition:background 220ms var(--ease-out), transform 160ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+/* Der Pfeil sitzt in seinem eigenen Kreis, nicht nackt neben dem Text. */
+.btn .pfeilkreis{
+  width:26px; height:26px; flex:none; border-radius:var(--rad-knopf);
+  background:rgba(255,255,255,.14); display:inline-flex; align-items:center; justify-content:center;
+  transition:transform 240ms var(--ease-out), background-color 240ms var(--ease-out);
+}
+.btn .pfeilkreis svg{width:13px; height:13px; display:block}
+.btn .pfeilkreis path{stroke:#fff; stroke-width:1.6; fill:none; stroke-linecap:round; stroke-linejoin:round}
+.btn:disabled{cursor:default}   /* Farbe bleibt, sonst faellt der Text auf 4,03:1 */
+/* Zeilenaktion: Textknopf statt Rahmen, damit die Liste nicht wie ein Gitter aus Formularfeldern wirkt */
+.btn-line{
+  background:none; border:none; cursor:pointer; color:var(--marke);
+  font-family:var(--schrift); font-size:13px; font-weight:500;
+  padding:9px 8px; border-radius:5px; white-space:nowrap;
+  transition:background 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn-ghost{
+  background:transparent; border:1.5px solid var(--marke); color:var(--marke);
+  font-family:var(--schrift); font-weight:500; font-size:13px; letter-spacing:.02em;
+  border-radius:var(--rad-knopf); padding:8px 16px; cursor:pointer; white-space:nowrap;
+  transition:background 200ms ease, color 200ms ease, transform 160ms var(--ease-out);
+}
+.btn-line[data-fehlt]{color:var(--gray-500); font-weight:400}
+.btn-line.entf{color:var(--gray-500); font-weight:400; font-size:12.5px}
+.entf-zeile{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; justify-content:flex-end; margin-top:4px}
+.entf-zeile .fehler{font-size:12.5px; color:var(--marke); display:none}
+.entf-zeile[data-blockiert="1"] .fehler{display:inline}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover:not(:disabled){
+    background:var(--marke-dunkel);
+    box-shadow:0 1px 0 rgba(255,255,255,.18) inset, 0 14px 30px -12px color-mix(in srgb, var(--marke) 40%, transparent);
+  }
+  .btn:hover:not(:disabled) .pfeilkreis{transform:translate(2px,-1px) scale(1.06); background:rgba(255,255,255,.22)}
+  .btn-line:hover{background:var(--marke-hell)}
+  .btn-line[data-fehlt]:hover{color:var(--marke); background:var(--marke-hell)}
+  .btn-ghost:hover{background:var(--marke); color:#fff}
+}
+.btn:active:not(:disabled),.btn-line:active,.btn-ghost:active{transform:scale(.97)}
+:focus-visible{outline:2px solid var(--marke); outline-offset:2px; border-radius:4px}
+.btn:focus-visible,.btn-line:focus-visible,.btn-ghost:focus-visible{outline:none; box-shadow:var(--ring)}
+.cam{display:none}
+@media (pointer:coarse){
+  /* Alle Tippziele auf mindestens 44 px. Ueber min-height statt Polster, weil das
+     Polster je Schriftgroesse anders ausfaellt und dann 41 px daraus werden. */
+  .cam{display:inline-flex}
+  .btn-line{min-height:44px; padding:10px; display:inline-flex; align-items:center}
+  .btn-ghost{min-height:44px; padding:10px 16px; display:inline-flex; align-items:center}
+  .objekt>summary{min-height:48px; padding:12px}
+  .xbtn{min-height:44px; min-width:44px; padding:10px 14px; display:inline-flex; align-items:center; justify-content:center}
+  .feld input{min-height:44px}
+}
+
+/* ---------- Ja/Nein-Frage vor den Objektbloecken ---------- */
+.frage{grid-column:2/-1; display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:8px 0 2px}
+.frage .text{font-size:13.5px; color:var(--gray-700)}
+.schalter{display:inline-flex; border:1px solid var(--hair); border-radius:var(--rad-knopf); overflow:hidden; background:var(--white); box-shadow:var(--schatten-1)}
+.schalter button{
+  background:none; border:none; cursor:pointer; padding:7px 16px; min-height:34px;
+  font-family:var(--schrift); font-size:13px; font-weight:500; color:var(--gray-500);
+  transition:background-color 180ms var(--ease-out), color 180ms var(--ease-out);
+}
+.schalter button + button{border-left:1px solid var(--hair)}
+.schalter button[aria-pressed="true"]{background:var(--marke-hell); color:var(--marke)}
+@media (hover:hover) and (pointer:fine){ .schalter button:hover{background:var(--gray-100)} }
+.schalter button:focus-visible{outline:none; box-shadow:var(--ring)}
+@media (pointer:coarse){ .schalter button{min-height:44px; padding:10px 18px} }
+
+/* ---------- Objektgruppe (aufklappbar) ---------- */
+.objekt{border:1px solid var(--hair); border-radius:var(--rad-klein); margin-top:10px; overflow:hidden;
+  background:var(--white); box-shadow:var(--schatten-1);
+  transition:box-shadow 240ms var(--ease-drawer)}
+.objekt[open]{box-shadow:var(--schatten-2)}
+.objekt>summary{
+  list-style:none; cursor:pointer; padding:10px 12px; display:flex; align-items:center; gap:8px;
+  font-size:14px; font-weight:500; color:var(--black);
+}
+.objekt>summary::-webkit-details-marker{display:none}
+.objekt>summary .pfeil{
+  width:7px; height:7px; border-right:1.5px solid var(--gray-500); border-bottom:1.5px solid var(--gray-500);
+  transform:rotate(-45deg); transition:transform 320ms var(--ease-drawer); flex:none; margin-right:4px;
+}
+.objekt[open]>summary .pfeil{transform:rotate(45deg)}
+.objekt>summary .zahl{margin-left:auto; font-size:12px; color:var(--gray-500); font-weight:400}
+.objekt .inhalt{padding:2px 12px 12px 28px; border-top:1px solid var(--gray-100)}
+.objekt[data-fehlt="1"]{border-color:var(--marke-mittel)}
+.feld{margin:10px 0 4px}
+.feld label{display:block; font-size:13px; color:var(--gray-700); margin-bottom:5px}
+.feld input{
+  width:100%; font-family:var(--schrift); font-size:14px; color:var(--black);
+  background:var(--marke-hell); border:1px solid var(--gray-200); border-radius:var(--rad-klein);
+  padding:10px 12px; transition:border-color 180ms ease, box-shadow 180ms ease;
+}
+.feld input:focus{outline:none; border-color:var(--marke); box-shadow:var(--ring)}
+.feld .fehler{font-size:12.5px; color:var(--marke); margin-top:4px; display:none}
+.objekt[data-fehlt="1"] .feld .fehler{display:block}
+.objekt-neu{margin-top:10px}
+
+/* ---------- Ablegefeld ---------- */
+.zone{
+  width:100%; display:block; text-align:center; cursor:pointer;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--marke) 2%, transparent) 0%, transparent 100%), var(--white);
+  border:1.5px dashed color-mix(in srgb, var(--marke) 22%, transparent); border-radius:var(--rad-mittel);
+  padding:30px 22px; font-family:var(--schrift); font-size:15px; color:var(--gray-500);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
+  transition:border-color 220ms var(--ease-out), background-color 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+.zone .zi{
+  display:block; width:30px; height:30px; margin:0 auto 10px;
+  background-color:var(--marke);
+  -webkit-mask:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.4' stroke-linecap='square'%3E%3Cpath d='M12 16V4M12 4l-4.5 4.5M12 4l4.5 4.5M3.5 15v4.5h17V15'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.4' stroke-linecap='square'%3E%3Cpath d='M12 16V4M12 4l-4.5 4.5M12 4l4.5 4.5M3.5 15v4.5h17V15'/%3E%3C/svg%3E") center/contain no-repeat;
+  transition:transform 220ms var(--ease-out);
+}
+.zone strong{font-family:var(--schrift); font-weight:600; color:var(--black); display:block; font-size:15px}
+.zone small{display:block; font-size:13px; color:var(--gray-500); margin-top:6px}
+.zone[data-drag="1"]{border-color:var(--marke); background:var(--marke-hell)}
+.zone[data-drag="1"] .zi{transform:translateY(-3px) scale(1.06)}
+@media (hover:hover) and (pointer:fine){
+  .zone:hover{border-color:var(--marke-mittel); background:var(--marke-hell); box-shadow:var(--schatten-1), inset 0 1px 0 rgba(255,255,255,.6)}
+}
+.zone:focus-visible{outline:none; box-shadow:var(--ring); border-color:var(--marke)}
+
+/* ---------- Dateizeilen ---------- */
+ul.files{list-style:none; margin:4px 0 2px; padding:0}
+ul.files li{
+  display:grid; grid-template-columns:1fr auto; gap:2px 10px; align-items:center;
+  background:var(--light); border:1px solid var(--hair); border-radius:var(--rad-klein);
+  padding:9px 11px; margin-top:7px;
+  animation:rowIn 240ms var(--ease-out) both;
+}
+@keyframes rowIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+ul.files .fn{font-size:13px; color:var(--black); overflow-wrap:anywhere}
+ul.files .fs{font-size:12px; color:var(--gray-700); font-variant-numeric:tabular-nums}
+ul.files .fst{font-size:12px; color:var(--gray-700); grid-column:1/-1}
+ul.files li[data-fs="fehler"]{border-color:var(--marke-mittel); background:var(--marke-hell)}
+ul.files li[data-fs="fehler"] .fst{color:var(--marke)}
+ul.files li[data-fs="fertig"]{border-color:var(--gruen-hell); background:var(--white)}
+ul.files li[data-fs="fertig"] .fst{color:var(--gruen)}
+.tick{color:var(--gruen); font-size:13px; white-space:nowrap}
+.xbtn{background:none; border:none; cursor:pointer; color:var(--gray-500); font-size:17px; line-height:1;
+  padding:9px 11px; border-radius:4px; transition:color 160ms ease, transform 160ms var(--ease-out)}
+@media (hover:hover){ .xbtn:hover{color:var(--marke)} }
+.xbtn:active{transform:scale(.9)}
+.pbar{grid-column:1/-1; height:3px; border-radius:99px; background:var(--gray-200); overflow:hidden; margin-top:2px}
+.pbar i{display:block; height:100%; width:34%; border-radius:99px; background:var(--marke); animation:slide 1.15s linear infinite}
+@keyframes slide{from{transform:translateX(-110%)} to{transform:translateX(320%)}}
+
+/* ---------- Fehlerkasten unten ---------- */
+.fehlerkasten{
+  border-left:4px solid var(--marke); background:var(--marke-hell);
+  border-radius:0 var(--rad-klein) var(--rad-klein) 0; padding:15px 19px; margin-top:18px;
+  box-shadow:var(--schatten-1);
+}
+.fehlerkasten[hidden]{display:none}
+.fehlerkasten h3{
+  font-family:var(--schrift); font-size:14px; font-weight:600;
+  color:var(--marke); margin:0 0 6px;
+}
+.fehlerkasten ul{list-style:none; margin:0; padding:0}
+.fehlerkasten li{
+  display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+  font-size:14px; color:var(--black); padding:3px 0;
+}
+.fehlerkasten .springen{
+  background:none; border:none; padding:2px 4px; cursor:pointer;
+  font-family:var(--schrift); font-size:13px; font-weight:500;
+  color:var(--marke); text-decoration:underline; text-underline-offset:3px; border-radius:4px;
+}
+@media (hover:hover){ .fehlerkasten .springen:hover{background:var(--marke-hell)} }
+
+/* kurze Markierung der Fehlerstelle nach dem Sprung */
+.markiert{
+  animation:markieren 2.4s ease-out 1;
+  border-radius:8px;
+}
+@keyframes markieren{
+  0%,55%{box-shadow:0 0 0 3px color-mix(in srgb, var(--marke) 28%, transparent); background:var(--marke-hell)}
+  100%{box-shadow:0 0 0 3px transparent; background:transparent}
+}
+
+/* ---------- "Nicht vorhanden" mit Grund ---------- */
+.grundfeld{grid-column:2/-1; margin:6px 0 2px; display:flex; gap:8px; flex-wrap:wrap; align-items:flex-start}
+.grundfeld input{
+  flex:1 1 220px; min-width:0; font-family:var(--schrift); font-size:14px;
+  color:var(--black); background:var(--marke-hell); border:1px solid var(--gray-200);
+  border-radius:var(--rad-klein); padding:10px 12px;
+}
+.grundfeld input:focus{outline:none; border-color:var(--marke); box-shadow:var(--ring)}
+.grundfeld .fehler{flex:1 1 100%; font-size:12.5px; color:var(--marke)}
+li[data-state="nichtvorhanden"]{background:var(--gray-100); box-shadow:inset 2px 0 0 var(--gray-400)}
+li[data-state="nichtvorhanden"] .doc-title{color:var(--gray-700); font-weight:400; text-decoration:line-through; text-decoration-color:var(--gray-400)}
+/* Die beantwortete Frage ist nicht abgelehnt, deshalb ohne Durchstreichung */
+li[data-gruppe][data-state="nichtvorhanden"] .doc-title{text-decoration:none; font-weight:500}
+li[data-state="nichtvorhanden"] .doc-status{color:var(--gray-700)}
+@media (hover:hover) and (pointer:fine){
+  ul.docs>li[data-state="nichtvorhanden"]:hover{background:var(--gray-100)}
+}
+
+/* ---------- Aktionsleiste ---------- */
+.actionbar{
+  position:sticky; bottom:14px; z-index:20; margin-top:18px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  background:rgba(255,255,255,.96); backdrop-filter:blur(12px);
+  border:1px solid var(--hair); border-radius:var(--rad-mittel); padding:15px 18px;
+  box-shadow:var(--schatten-3);
+  transition:opacity 220ms var(--ease-out), transform 240ms var(--ease-out);
+}
+.actionbar[hidden]{display:none}
+.actionbar.aus{opacity:0; transform:translateY(14px)}
+.actionbar .txt{font-size:14px; color:var(--black)}
+.actionbar .txt small{display:block; font-size:12.5px; color:var(--gray-500)}
+
+/* ---------- Boxen und Fuss ---------- */
+.info{border-left:4px solid var(--gruen); background:var(--gruen-50); border-radius:0 var(--rad-klein) var(--rad-klein) 0; padding:17px 21px; margin-top:16px; box-shadow:var(--schatten-1)}
+.info h3{font-family:var(--schrift); font-size:14px; font-weight:600; color:var(--gruen); margin:0 0 4px}
+.info p{font-size:14px; color:var(--black); margin:0}
+.info.rot{border-left-color:var(--marke); background:var(--marke-hell)}
+.info.rot h3{color:var(--marke)}
+.akzent{border-left:4px solid var(--akzent); background:var(--akzent-hell); border-radius:0 var(--rad-klein) var(--rad-klein) 0; padding:17px 21px; margin-top:18px}
+.akzent p{font-size:13px; color:var(--black); margin:0}
+footer{margin-top:22px; padding-top:18px; border-top:1px solid var(--akzent); font-size:12px; color:var(--gray-500); line-height:1.6}
+footer .pflicht{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:14px}
+footer .pflicht .lab{display:block; font-size:9px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--akzent); margin-bottom:4px}
+footer .pflicht .val{display:block; font-size:12px; color:var(--gray-500); line-height:1.6}
+@media (max-width:600px){ footer .pflicht{grid-template-columns:1fr; gap:12px} }
+footer a{color:var(--gray-700)}
+footer .kontakt{color:var(--gray-700); font-size:13px; margin-bottom:8px}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+@media (max-width:600px){
+  .shell{padding:16px 14px 150px}
+  .hero{padding:24px 20px; border-radius:var(--rad-mittel)}
+  .card{padding:18px 16px}
+  .meta{grid-template-columns:1fr 1fr}
+  ul.docs>li{grid-template-columns:20px 1fr; row-gap:2px; padding:8px 0}
+  .doc-actions{grid-column:2/-1; margin-left:-8px; gap:0}
+  .doc-status:empty{display:none}
+  .actionbar{position:fixed; left:14px; right:14px; bottom:14px; margin:0; padding:12px 14px; gap:10px}
+  .actionbar .btn{width:100%; padding:14px 20px}
+  .actionbar .txt{flex:1 1 100%; font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){
+  /* Bewegung raus, Rueckmeldung bleibt: Farb- und Deckkraftwechsel tragen den Zustand weiter.
+     Ein pauschales Abwuergen aller Uebergaenge nimmt der Seite die Zustandsanzeige. */
+  ul.files li{animation:none}
+  .mark svg{transform:none; transition:opacity 120ms linear}
+  .mark svg path{stroke-dasharray:none; stroke-dashoffset:0; transition:none}
+  .actionbar{transition:opacity 140ms linear}
+  .actionbar.aus{transform:none}
+  .btn:active:not(:disabled),.btn-line:active,.btn-ghost:active,.xbtn:active{transform:none}
+  .zone[data-drag="1"] .zi{transform:none}
+  .btn .pfeilkreis{transition:none}
+  .btn:hover:not(:disabled) .pfeilkreis{transform:none}
+  .objekt>summary .pfeil{transition:none}
+  .markiert{animation:none; box-shadow:0 0 0 3px color-mix(in srgb, var(--marke) 28%, transparent)}
+  .pbar i{width:100%; animation:none}
+  .bar span{transition:none}
+}
+</style>
+</head>
+<body>
+<main class="shell">
+
+  <div class="heroshell">
+  <header class="hero">
+    <div class="hero-inner">
+      <? if (logo) { ?><img class="logo" src="<?!= logo ?>" alt="<?= firma.name ?>"><? } else { ?><span class="wortmarke"><?= firma.name ?></span><? } ?>
+      <span class="eyebrow"><?= t.eyebrow ?></span>
+      <h1><?!= t.heroTitelHtml ?></h1>
+      <p class="lead"><?= t.heroLead ?></p>
+      <div class="meta">
+        <div><span class="k"><?= t.metaVorgang ?></span><span class="v" id="mObjekt"><?= t.vorgangStandard ?></span></div>
+        <div><span class="k"><?= t.metaAnsprechpartner ?></span><span class="v"><?= firma.ansprechpartner ?></span></div>
+        <div><span class="k"><?= t.metaGueltig ?></span><span class="v" id="mGueltig"></span></div>
+      </div>
+    </div>
+  </header>
+  </div>
+
+  <section class="card" id="ungueltigView" hidden>
+    <span class="eyebrow"><?= t.ungueltigEyebrow ?></span>
+    <h2><?= t.ungueltigTitel ?></h2>
+    <p class="sub"><?= t.ungueltigText ?></p>
+    <div class="info rot" style="margin-top:18px">
+      <h3><?= t.direkterKontakt ?></h3>
+      <p>Telefon <?= firma.telefon ?> · <?= firma.email ?><br><?= firma.name ?>, <?= firma.adresse ?></p>
+    </div>
+  </section>
+
+  <noscript>
+    <div class="info rot">
+      <h3><?= t.jsTitel ?></h3>
+      <p><?= t.jsText ?> <?= firma.telefon ?></p>
+    </div>
+  </noscript>
+
+  <section class="card" id="fortschrittKarte" aria-labelledby="fortschritt-titel">
+    <div class="status">
+      <span class="zahl" id="fortschritt-titel"><span id="fzahl">0</span> von <span id="fges">0</span> <?= t.erledigt ?></span>
+      <span class="rest" id="frest"></span>
+    </div>
+    <div class="bar" aria-hidden="true"><span id="fbar"></span></div>
+    <p class="hint"><?= t.unterbrechen ?> <span id="laufzeit"></span> <span id="standzeile"></span></p>
+    <div class="info" id="erfolg" hidden style="margin-top:16px">
+      <h3 id="erfolgtitel">Angekommen</h3>
+      <p id="erfolgtext"></p>
+    </div>
+  </section>
+
+  <div id="gruppen"></div>
+
+  <section class="card">
+    <span class="eyebrow" id="weitereNr">03 · Weitere Unterlagen</span>
+    <h2><?= t.weitereH2 ?></h2>
+    <p class="sub"><?= t.weitereText ?></p>
+    <button type="button" class="zone" id="zone" style="margin-top:14px">
+      <span class="zi" aria-hidden="true"></span>
+      <strong><?= t.zoneTitel ?></strong>
+      <small><span id="formate"><?= t.zoneFormate ?></span> · maximal <span id="maxmb">50</span> MB je Datei</small>
+    </button>
+    <ul class="files" data-files="weitere" id="weitere"></ul>
+  </section>
+
+  <div class="fehlerkasten" id="fehlerkasten" role="alert" hidden>
+    <h3 id="fehlerTitel"><?= t.fehlerTitel ?></h3>
+    <ul id="fehlerliste"></ul>
+  </div>
+
+  <div class="actionbar aus" id="actionbar" hidden>
+    <span class="txt"><strong id="abtxt"><?= t.keineAuswahl ?></strong><small id="absub"><?= t.nichtsOhneBestaetigung ?></small></span>
+    <button type="button" class="btn" id="send"><span id="sendtext"><?= t.sicherUebertragen ?></span><span class="pfeilkreis" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5.5M11 3v5.5"/></svg></span></button>
+  </div>
+
+  <div class="akzent">
+    <p><strong>Datenschutz.</strong> <?= t.datenschutz ?></p>
+  </div>
+
+  <p class="sr" role="status" aria-live="polite" id="live"></p>
+
+  <footer>
+    <p class="kontakt"><strong><?= t.fragen ?></strong> Telefon <?= firma.telefon ?> · <a href="mailto:<?= firma.email ?>"><?= firma.email ?></a></p>
+    <div class="pflicht">
+      <div><span class="lab">Firma</span><span class="val"><?= firma.name ?></span></div>
+      <div><span class="lab">Adresse</span><span class="val"><?= firma.adresse ?></span></div>
+      <div><span class="lab">Kontakt</span><span class="val"><?= firma.telefon ?><br><?= firma.email ?><br><?= firma.website ?></span></div>
+    </div>
+  </footer>
+</main>
+
+<input type="file" id="fileinput" multiple hidden>
+<input type="file" id="caminput" accept="image/*,application/pdf" capture="environment" hidden>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ------------------------------------------------------------------
+     Fall- und Checklistendaten.
+     Gesetzt von doGet (Code.gs) aus dem Blatt Positionen.
+     Fehlt der Block, laeuft die Seite ohne Checkliste weiter (nur Ablegefeld).
+     ------------------------------------------------------------------ */
+  var FALL = <?!= fallJson ?>;
+  var T = <?!= texteJson ?>;
+
+  var MAX_MB = Number(<?= maxMb ?>);
+  var TOKEN = '<?= token ?>';
+  var GUELTIG = String(<?= gueltig ?>) === 'true';
+  var MAX_BYTES = MAX_MB * 1024 * 1024;
+
+  /* Zugelassene Formate: keine programmierbaren Dateien.
+     Ausgefuellte Vorlagen kommen als PDF oder als Foto der unterschriebenen Fassung zurueck.
+     Serverseitig dieselbe Pruefung, der Browser ist keine Sicherheitsgrenze. */
+  var ERLAUBT = ['pdf','jpg','jpeg','png','heic','heif'];
+
+  var zaehler = 0;
+  var eintraege = [];          // {id, file, docId, docTitel, status}
+  var zielDoc = 'weitere';
+  var laeuft = false;
+  var objekte = {};            // gruppenKey -> [{id, name}]
+  var objZaehler = {};         // gruppenKey -> hoechste je vergebene Blocknummer.
+                               // Nur hochzaehlen, nie aus objekte.length ableiten: nach dem
+                               // Entfernen von Block 1 ergaebe length+1 die schon vergebene 2.
+  var setzenRef = {};          // gruppenKey -> setzen() der Frage, fuer das Entfernen
+  var nichtVorhanden = {};     // docId -> Grund
+  var hatBestand = {};         // gruppenKey -> true (Ja), false (Nein), null (noch nicht beantwortet)
+  var vorStand = {};           // gruppenKey -> { dateien, erledigt } aus früheren Besuchen
+
+  var el = {
+    fileinput: document.getElementById('fileinput'),
+    caminput: document.getElementById('caminput'),
+    zone: document.getElementById('zone'),
+    bar: document.getElementById('actionbar'),
+    send: document.getElementById('send'),
+    sendtext: document.getElementById('sendtext'),
+    abtxt: document.getElementById('abtxt'),
+    absub: document.getElementById('absub'),
+    live: document.getElementById('live'),
+    fzahl: document.getElementById('fzahl'),
+    fges: document.getElementById('fges'),
+    frest: document.getElementById('frest'),
+    fbar: document.getElementById('fbar'),
+    fehlerkasten: document.getElementById('fehlerkasten'),
+    fehlerliste: document.getElementById('fehlerliste'),
+    erfolg: document.getElementById('erfolg'),
+    erfolgtitel: document.getElementById('erfolgtitel'),
+    erfolgtext: document.getElementById('erfolgtext'),
+    gruppen: document.getElementById('gruppen')
+  };
+  document.getElementById('maxmb').textContent = MAX_MB;
+
+  /* ---------- Hilfen ---------- */
+  function groesse(b){
+    if (b < 1024) return b + ' B';
+    if (b < 1024*1024) return (b/1024).toFixed(0) + ' KB';
+    return (b/1024/1024).toFixed(b < 10*1024*1024 ? 1 : 0).replace('.', ',') + ' MB';
+  }
+  function endung(name){
+    var i = name.lastIndexOf('.');
+    return i > -1 ? name.slice(i+1).toLowerCase() : '';
+  }
+  function sagen(text){ el.live.textContent = text; }
+  function liste(docId){ return document.querySelector('[data-files="' + docId + '"]'); }
+  function zeileVon(docId){ return document.querySelector('li[data-id="' + docId + '"]'); }
+  function nummer(n){ return n < 10 ? '0' + n : '' + n; }
+
+  /* ---------- Seite aus den Falldaten aufbauen ---------- */
+  function seiteAufbauen(){
+    if (FALL){
+      if (FALL.vorgang) document.getElementById('mObjekt').textContent = FALL.vorgang;
+      if (FALL.gueltig_bis) document.getElementById('mGueltig').textContent = FALL.gueltig_bis;
+      if (FALL.stand) document.getElementById('standzeile').textContent = 'Stand: ' + FALL.stand + '.';
+      var tage = FALL.gueltig_tage || 21;
+      document.getElementById('laufzeit').textContent =
+        T.laufzeit.replace('{TAGE}', tage).replace('{DATUM}', FALL.gueltig_bis || '');
+    }
+    var anzahl = (FALL && FALL.gruppen) ? FALL.gruppen.length : 0;
+    document.getElementById('weitereNr').textContent = nummer(anzahl + 1) + ' · ' + T.weitereTitel;
+    if (!anzahl){ document.getElementById('fortschrittKarte').hidden = true; return; }
+    FALL.gruppen.forEach(function(gruppe, i){ el.gruppen.appendChild(gruppenKarte(gruppe, i + 1)); });
+  }
+
+  function gruppenKarte(gruppe, index){
+    var karte = document.createElement('section');
+    karte.className = 'card';
+    var eyebrow = document.createElement('span');
+    eyebrow.className = 'eyebrow';
+    eyebrow.textContent = nummer(index) + ' · ' + gruppe.titel;
+    var h2 = document.createElement('h2');
+    h2.textContent = gruppe.untertitel || gruppe.titel;
+    var sub = document.createElement('p');
+    sub.className = 'sub';
+    sub.textContent = T.gruppeHinweis;
+    karte.appendChild(eyebrow); karte.appendChild(h2); karte.appendChild(sub);
+
+    var ul = document.createElement('ul');
+    ul.className = 'docs';
+    gruppe.positionen.forEach(function(pos, i){
+      ul.appendChild((pos.kinder && pos.kinder.length) ? objektZeile(pos, i + 1) : zeile(pos, i + 1));
+    });
+    karte.appendChild(ul);
+    return karte;
+  }
+
+  function zeile(pos, lfd){
+    var li = document.createElement('li');
+    li.setAttribute('data-id', pos.key);
+    li.setAttribute('data-state', pos.status === 'geprueft' ? 'geprueft' : 'offen');
+    li.setAttribute('data-basis', pos.status === 'geprueft' ? 'geprueft' : 'offen');
+    if (pos.erwartet > 1) li.setAttribute('data-erwartet', pos.erwartet);
+    li.setAttribute('data-vorher', pos.dateien || 0);      // schon früher übertragene Dateien
+    if (pos.status === 'nicht_vorhanden' && pos.grund) nichtVorhanden[pos.key] = pos.grund;
+
+    var nr = document.createElement('span');
+    nr.className = 'nr';
+    nr.textContent = lfd + '.';
+
+    var mitte = document.createElement('div');
+    var titel = document.createElement('span');
+    titel.className = 'doc-title';
+    var mark = document.createElement('span');
+    mark.className = 'mark';
+    mark.setAttribute('aria-hidden', 'true');
+    mark.innerHTML = '<svg viewBox="0 0 16 16"><path d="M2.5 8.4l3.4 3.4L13.4 4"/></svg>';
+    titel.appendChild(mark);
+    titel.appendChild(document.createTextNode(pos.titel));
+    mitte.appendChild(titel);
+    if (pos.hinweis){
+      var h = document.createElement('span');
+      h.className = 'doc-hint';
+      h.textContent = pos.hinweis;
+      mitte.appendChild(h);
+    }
+    var st = document.createElement('span');
+    st.className = 'doc-status';
+    mitte.appendChild(st);
+    var files = document.createElement('ul');
+    files.className = 'files';
+    files.setAttribute('data-files', pos.key);
+    mitte.appendChild(files);
+
+    var rechts = document.createElement('div');
+    rechts.className = 'doc-actions';
+    rechts.appendChild(zeilenKnopf('data-pick', pos.key, 'Datei wählen'));
+    rechts.appendChild(zeilenKnopf('data-cam', pos.key, 'Foto', 'cam'));
+    rechts.appendChild(zeilenKnopf('data-fehlt', pos.key, 'Nicht vorhanden'));
+
+    li.appendChild(nr); li.appendChild(mitte); li.appendChild(rechts);
+    return li;
+  }
+
+  function zeilenKnopf(attr, key, text, extra){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn-line' + (extra ? ' ' + extra : '');
+    b.setAttribute(attr, key);
+    b.textContent = text;
+    return b;
+  }
+
+  /* Position mit Unterpunkten je Block (Objekt, Maßnahme, Person ...). Name und Feld aus der Checkliste */
+  function bName(pos){ return pos.blockName || T.blockStandard; }
+  function bFeld(pos){ return pos.blockFeld || T.blockFeldStandard; }
+
+  function objektZeile(pos, lfd){
+    var li = document.createElement('li');
+    li.setAttribute('data-id', pos.key);
+    li.setAttribute('data-state', 'offen');
+    li.setAttribute('data-gruppe', '1');
+
+    var nr = document.createElement('span');
+    nr.className = 'nr';
+    nr.textContent = lfd + '.';
+
+    var mitte = document.createElement('div');
+    var titel = document.createElement('span');
+    titel.className = 'doc-title';
+    titel.textContent = pos.titel;
+    var hinweis = document.createElement('span');
+    hinweis.className = 'doc-hint';
+    hinweis.textContent = T.objektHinweis.replace('{BLOCK}', bName(pos));
+    var stand = document.createElement('span');
+    stand.className = 'doc-status';
+    hinweis.hidden = true;                       // erst bei "Ja" sinnvoll
+    mitte.appendChild(titel); mitte.appendChild(stand);
+
+    var behaelter = document.createElement('div');
+    behaelter.hidden = true;
+    var neu = document.createElement('button');
+    neu.type = 'button';
+    neu.className = 'btn-ghost objekt-neu';
+    neu.textContent = T.objektWeiteres.replace('{BLOCK}', bName(pos));
+    neu.hidden = true;
+    neu.addEventListener('click', function(){ objektAnlegen(pos, behaelter, true); aktualisieren(); });
+
+    /* Frage vor den Blöcken. Sie muss beantwortet werden: "Nein" meldet die Position als nicht
+       vorhanden, "Ja" öffnet je Objekt einen Block. Die Antwort geht an den Server, damit Zählung
+       und Erinnerungen stimmen und sie nach dem Neuladen erhalten bleibt. */
+    var frage = document.createElement('div');
+    frage.className = 'frage';
+    var fragetext = document.createElement('span');
+    fragetext.className = 'text';
+    fragetext.id = pos.key + '-frage';
+    fragetext.textContent = pos.frage || 'Vorhanden?';
+    var schalter = document.createElement('div');
+    schalter.className = 'schalter';
+    schalter.setAttribute('role', 'group');
+    schalter.setAttribute('aria-labelledby', fragetext.id);
+    var hinweisZuViel = document.createElement('span');
+    hinweisZuViel.className = 'text';
+    hinweisZuViel.style.color = 'var(--marke)';
+    hinweisZuViel.style.display = 'none';
+    hinweisZuViel.textContent = T.objektErstDateien;
+
+    function setzen(ja, opt){
+      opt = opt || {};
+      if (ja !== true && behaelter.querySelectorAll('ul.files li[data-fs]').length){
+        hinweisZuViel.style.display = 'inline';
+        return;
+      }
+      hinweisZuViel.style.display = 'none';
+      hatBestand[pos.key] = ja;
+      hinweis.hidden = ja !== true;
+      behaelter.hidden = ja !== true;
+      neu.hidden = ja !== true;
+      knopfNein.setAttribute('aria-pressed', ja === false ? 'true' : 'false');
+      knopfJa.setAttribute('aria-pressed', ja === true ? 'true' : 'false');
+      if (ja === true && !objekte[pos.key].length && !opt.ohneBlock) objektAnlegen(pos, behaelter, true);
+      if (!opt.still){
+        if (ja === false) meldenServer(pos.key, T.objektKeine);
+        else if (ja === true) google.script.run
+          .withFailureHandler(function(err){ sagen(serverText(err)); })
+          .nimmMeldungZurueck(TOKEN, pos.key);
+      }
+      aktualisieren();
+    }
+    setzenRef[pos.key] = setzen;
+    var knopfNein = document.createElement('button');
+    knopfNein.type = 'button';
+    knopfNein.textContent = 'Nein';
+    knopfNein.setAttribute('aria-pressed', 'false');
+    knopfNein.addEventListener('click', function(){ setzen(false); });
+    var knopfJa = document.createElement('button');
+    knopfJa.type = 'button';
+    knopfJa.textContent = 'Ja';
+    knopfJa.setAttribute('aria-pressed', 'false');
+    knopfJa.addEventListener('click', function(){ setzen(true); });
+    schalter.appendChild(knopfNein); schalter.appendChild(knopfJa);
+    frage.appendChild(fragetext); frage.appendChild(schalter); frage.appendChild(hinweisZuViel);
+
+    behaelter.className = 'behaelter';
+    mitte.appendChild(frage);
+    mitte.appendChild(hinweis);
+    mitte.appendChild(behaelter);
+    mitte.appendChild(neu);
+
+    li.appendChild(nr); li.appendChild(mitte);
+    objekte[pos.key] = [];
+    vorStand[pos.key] = { dateien: pos.vorDateien || 0, erledigt: !!pos.erledigt };
+
+    /* Stand aus früheren Besuchen: "Nein" gemeldet, oder schon Dateien in Objektblöcken.
+       Frühere Blöcke selbst kennt der Server nicht (die Adresse steht nur im Dateinamen),
+       deshalb steht dort die Zahl der übertragenen Dateien und "Weiteres Objekt". */
+    if (pos.status === 'nicht_vorhanden') setzen(false, { still: true });
+    else if (pos.vorDateien > 0 || pos.status === 'geprueft') setzen(true, { still: true, ohneBlock: true });
+    else setzen(null, { still: true });
+    return li;
+  }
+
+  function objektAnlegen(pos, behaelter, aufklappen, adresse){
+    objZaehler[pos.key] = (objZaehler[pos.key] || 0) + 1;
+    var index = objZaehler[pos.key];
+    var objId = pos.key + '--o' + index;
+    adresse = (adresse || '').trim();
+    objekte[pos.key].push({ id: objId, name: adresse, eltern: pos.titel });
+
+    var det = document.createElement('details');
+    det.className = 'objekt';
+    det.setAttribute('data-block', bName(pos));
+    if (aufklappen) det.open = true;
+
+    var sum = document.createElement('summary');
+    sum.innerHTML = '<span class="pfeil" aria-hidden="true"></span>';
+    var name = document.createElement('span');
+    name.className = 'objName';
+    name.textContent = adresse || (bName(pos) + ' ' + index);
+    var zahl = document.createElement('span');
+    zahl.className = 'zahl';
+    zahl.textContent = 'keine Datei';
+    sum.appendChild(name); sum.appendChild(zahl);
+    det.appendChild(sum);
+
+    var inhalt = document.createElement('div');
+    inhalt.className = 'inhalt';
+
+    var feld = document.createElement('div');
+    feld.className = 'feld';
+    var lab = document.createElement('label');
+    lab.setAttribute('for', objId + '-adr');
+    lab.textContent = bFeld(pos);
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.id = objId + '-adr';
+    if (adresse) inp.value = adresse;
+    inp.addEventListener('input', function(){
+      objekte[pos.key].forEach(function(o){ if (o.id === objId) o.name = inp.value.trim(); });
+      name.textContent = inp.value.trim() || (bName(pos) + ' ' + index);
+      det.removeAttribute('data-fehlt');
+      inp.removeAttribute('aria-invalid');
+      if (!el.fehlerkasten.hidden) adressenGeprueft();
+    });
+    var fehler = document.createElement('span');
+    fehler.className = 'fehler';
+    fehler.id = objId + '-fehler';
+    fehler.textContent = T.objektAdresseFehlt;
+    inp.setAttribute('aria-describedby', fehler.id);
+    feld.appendChild(lab); feld.appendChild(inp); feld.appendChild(fehler);
+    inhalt.appendChild(feld);
+
+    var ul = document.createElement('ul');
+    ul.className = 'docs';
+    pos.kinder.forEach(function(kind, i){
+      ul.appendChild(zeile({
+        key: objId + '--' + kind.key,
+        titel: kind.titel,
+        hinweis: kind.hinweis || '',
+        /* Status aus der Checkliste übernehmen, nicht pauschal "offen". */
+        status: kind.status || 'offen',
+        erwartet: kind.erwartet || 1
+      }, i + 1));
+    });
+    inhalt.appendChild(ul);
+
+    /* Ein aus Versehen angelegter Block muss wieder weg koennen. Solange Dateien in ihm
+       liegen, ist das gesperrt: erst die Dateien entfernen, dann den Block. Faellt der
+       letzte Block, springt die Frage zurueck auf "Nein". */
+    var entfZeile = document.createElement('div');
+    entfZeile.className = 'entf-zeile';
+    var entfFehler = document.createElement('span');
+    entfFehler.className = 'fehler';
+    entfFehler.textContent = T.objektErstDateien;
+    var entf = document.createElement('button');
+    entf.type = 'button';
+    entf.className = 'btn-line entf';
+    entf.textContent = T.objektEntfernen.replace('{BLOCK}', bName(pos));
+    entf.addEventListener('click', function(){
+      if (det.querySelector('ul.files li')){
+        entfZeile.setAttribute('data-blockiert', '1');
+        return;
+      }
+      objekte[pos.key] = objekte[pos.key].filter(function(o){ return o.id !== objId; });
+      det.remove();
+      sagen(bName(pos) + ' entfernt.');
+      if (!objekte[pos.key].length && setzenRef[pos.key]){
+        // letzter Block weg: mit früheren Dateien bleibt "Ja", sonst wieder unbeantwortet
+        setzenRef[pos.key](vorStand[pos.key].dateien > 0 ? true : null, { still: true, ohneBlock: true });
+      } else {
+        aktualisieren();
+      }
+    });
+    inp.addEventListener('input', function(){ entfZeile.removeAttribute('data-blockiert'); });
+    entfZeile.appendChild(entfFehler); entfZeile.appendChild(entf);
+    inhalt.appendChild(entfZeile);
+
+    det.appendChild(inhalt);
+    behaelter.appendChild(det);
+  }
+
+  function objektVon(docId){
+    var s = String(docId);
+    var i = s.indexOf('--o');
+    if (i === -1) return null;
+    var gruppe = objekte[s.slice(0, i)] || [];
+    for (var k = 0; k < gruppe.length; k++){
+      if (s.indexOf(gruppe[k].id + '--') === 0) return gruppe[k];
+    }
+    return null;
+  }
+
+  /* ---------- "Nicht vorhanden" mit Grund ---------- */
+  function grundFormular(key){
+    var li = zeileVon(key);
+    if (!li || li.querySelector('.grundfeld')) return;
+    var box = document.createElement('div');
+    box.className = 'grundfeld';
+    var feld = document.createElement('input');
+    feld.type = 'text';
+    feld.id = key + '-grund';
+    feld.placeholder = T.grundPlatzhalter;
+    feld.setAttribute('aria-label', 'Grund, warum die Unterlage nicht vorliegt');
+    var senden = document.createElement('button');
+    senden.type = 'button';
+    senden.className = 'btn-ghost';
+    senden.textContent = 'Melden';
+    var abbrechen = document.createElement('button');
+    abbrechen.type = 'button';
+    abbrechen.className = 'btn-line';
+    abbrechen.textContent = 'Abbrechen';
+    var fehler = document.createElement('span');
+    fehler.className = 'fehler';
+    fehler.style.display = 'none';
+    fehler.textContent = T.grundFehlt;
+    fehler.id = key + '-grundfehler';
+    feld.setAttribute('aria-describedby', fehler.id);
+
+    senden.addEventListener('click', function(){
+      var grund = feld.value.trim();
+      if (grund.length < 3){
+        fehler.style.display = 'block';
+        feld.setAttribute('aria-invalid', 'true');
+        feld.focus();
+        return;
+      }
+      nichtVorhanden[key] = grund;
+      box.remove();
+      meldenServer(key, grund);
+      sagen('Als nicht vorhanden gemeldet.');
+      aktualisieren();
+    });
+    abbrechen.addEventListener('click', function(){ box.remove(); aktualisieren(); });
+    feld.addEventListener('input', function(){ fehler.style.display = 'none'; feld.removeAttribute('aria-invalid'); });
+    feld.addEventListener('keydown', function(ev){ if (ev.key === 'Enter'){ ev.preventDefault(); senden.click(); } });
+
+    box.appendChild(feld); box.appendChild(senden); box.appendChild(abbrechen); box.appendChild(fehler);
+    li.appendChild(box);
+    feld.focus();
+  }
+
+  function zuruecknehmen(key){
+    delete nichtVorhanden[key];
+    google.script.run
+      .withFailureHandler(function(err){ sagen(serverText(err)); })
+      .nimmMeldungZurueck(TOKEN, key);
+    sagen('Meldung zurückgenommen.');
+    aktualisieren();
+  }
+
+  /* Meldung "nicht vorhanden" mit Grund an den Server. Er trägt sie in die Tabelle ein.
+     Ob die Position entfällt, entscheidet der Betreiber. */
+  function meldenServer(key, grund){
+    google.script.run
+      .withFailureHandler(function(err){ sagen(serverText(err) || 'Die Meldung kam nicht an.'); })
+      .meldeNichtVorhanden(TOKEN, key, docTitel(key) || key, grund);
+  }
+
+  /* ---------- Dateien aufnehmen ---------- */
+  function docTitel(docId){
+    var li = zeileVon(docId);
+    var titel = li ? li.querySelector('.doc-title').textContent.trim() : '';
+    var obj = objektVon(docId);
+    if (obj) return (obj.eltern || T.blockStandard) + ' ' + (obj.name || 'ohne Angabe') + ' - ' + titel;
+    return titel;
+  }
+
+  function aufnehmen(files, docId){
+    var abgelehnt = [];
+    Array.prototype.forEach.call(files, function(f){
+      if (f.size > MAX_BYTES){ abgelehnt.push('"' + f.name + '" ist größer als ' + MAX_MB + ' MB'); return; }
+      if (f.size === 0){ abgelehnt.push('"' + f.name + '" ist leer'); return; }
+      if (ERLAUBT.indexOf(endung(f.name)) === -1){
+        abgelehnt.push('"' + f.name + '" ' + T.formatAbgelehnt);
+        return;
+      }
+      var eintrag = { id: 'e' + (++zaehler), file: f, docId: docId, docTitel: docTitel(docId), status: 'bereit' };
+      eintraege.push(eintrag);
+      dateiZeile(eintrag);
+    });
+    abgelehnt.forEach(function(t){ fehlerZeile(t, docId); });
+    if (abgelehnt.length) sagen(abgelehnt.join('. '));
+    aktualisieren();
+  }
+
+  function dateiZeile(eintrag){
+    var ziel = liste(eintrag.docId);
+    if (!ziel) return;
+    var li = document.createElement('li');
+    li.id = eintrag.id;
+    li.setAttribute('data-fs', 'bereit');
+    li.innerHTML = '<span class="fn"></span><span class="rechts"><span class="fs"></span> <button type="button" class="xbtn" aria-label="Datei entfernen">&times;</button></span><span class="fst">Bereit zum Übertragen</span>';
+    li.querySelector('.fn').textContent = eintrag.file.name;
+    li.querySelector('.fs').textContent = groesse(eintrag.file.size);
+    li.querySelector('.xbtn').addEventListener('click', function(){ entfernen(eintrag.id); });
+    ziel.appendChild(li);
+  }
+
+  function fehlerZeile(text, docId){
+    var ziel = liste(docId) || document.getElementById('weitere');
+    var li = document.createElement('li');
+    li.setAttribute('data-fs', 'fehler');
+    li.innerHTML = '<span class="fn"></span><span></span><span class="fst">Bitte prüfen und erneut versuchen</span>';
+    li.querySelector('.fn').textContent = text;
+    ziel.appendChild(li);
+    setTimeout(function(){
+      if (li.parentNode) li.parentNode.removeChild(li);
+      aktualisieren();
+    }, 9000);
+  }
+
+  function entfernen(id){
+    eintraege = eintraege.filter(function(e){ return e.id !== id; });
+    var li = document.getElementById(id);
+    if (li && li.parentNode) li.parentNode.removeChild(li);
+    aktualisieren();
+    sagen('Datei entfernt.');
+  }
+
+  /* ---------- Status ---------- */
+  function aktualisieren(){
+    var offen = eintraege.filter(function(e){ return e.status === 'bereit'; });
+
+    if (offen.length && !laeuft){
+      el.bar.hidden = false;
+      requestAnimationFrame(function(){ el.bar.classList.remove('aus'); });
+      el.abtxt.textContent = offen.length === 1 ? '1 Datei ausgewählt' : offen.length + ' Dateien ausgewählt';
+      el.absub.textContent = T.nichtsOhneBestaetigung;
+      el.send.disabled = false;
+      el.sendtext.textContent = offen.length === 1 ? 'Datei sicher übertragen' : offen.length + ' Dateien sicher übertragen';
+    } else if (!laeuft){
+      el.bar.classList.add('aus');
+      setTimeout(function(){
+        if (!eintraege.some(function(e){ return e.status === 'bereit'; })) el.bar.hidden = true;
+      }, 240);
+    }
+
+    var erledigt = 0, gesamt = 0;
+
+    Array.prototype.forEach.call(document.querySelectorAll('ul.docs > li:not([data-gruppe])'), function(li){
+      var id = li.getAttribute('data-id');
+      var basis = li.getAttribute('data-basis');
+      var fertig = eintraege.filter(function(e){ return e.docId === id && e.status === 'fertig'; }).length
+                 + parseInt(li.getAttribute('data-vorher') || '0', 10);
+      var erwartet = parseInt(li.getAttribute('data-erwartet') || '1', 10);
+      var vollstaendig = fertig >= erwartet;
+      var gemeldet = !!nichtVorhanden[id];
+      var zustand = basis === 'geprueft' ? 'geprueft'
+                  : (fertig ? (vollstaendig ? 'angekommen' : 'teilweise')
+                            : (gemeldet ? 'nichtvorhanden' : 'offen'));
+      li.setAttribute('data-state', zustand);
+
+      var st = li.querySelector('.doc-status');
+      if (st){
+        if (zustand === 'geprueft') st.textContent = 'Liegt vollständig vor';
+        else if (zustand === 'angekommen') st.textContent = erwartet > 1
+          ? 'Alle ' + erwartet + ' Dateien angekommen, wir prüfen'
+          : 'Angekommen, wir prüfen';
+        else if (zustand === 'teilweise') st.textContent = fertig + ' von ' + erwartet + ' Dateien angekommen, es fehlen noch ' + (erwartet - fertig);
+        else if (zustand === 'nichtvorhanden') st.textContent = 'Als nicht vorhanden gemeldet: ' + nichtVorhanden[id];
+        else st.textContent = erwartet > 1 ? 'In der Regel ' + erwartet + ' Dateien' : '';
+      }
+      var knopf = li.querySelector('[data-pick]');
+      if (knopf) knopf.textContent = (zustand === 'offen' || zustand === 'nichtvorhanden') ? 'Datei wählen' : 'Weitere Datei';
+      var fknopf = li.querySelector('[data-fehlt]');
+      if (fknopf){
+        fknopf.textContent = gemeldet ? 'Meldung zurücknehmen' : 'Nicht vorhanden';
+        fknopf.hidden = (zustand === 'angekommen' || zustand === 'geprueft' || zustand === 'teilweise');
+      }
+
+      // Objektpositionen zählen mit, aber nur bei "Ja": sonst ist der Behälter verborgen.
+      // Eingeklappte Blöcke zählen weiter.
+      var beh = li.closest ? li.closest('.behaelter') : null;
+      if (beh && beh.hidden) return;
+      gesamt++;
+      if (zustand === 'geprueft' || zustand === 'angekommen' || zustand === 'nichtvorhanden') erledigt++;
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('.objekt'), function(det){
+      var dateien = det.querySelectorAll('ul.files li[data-fs="bereit"], ul.files li[data-fs="laeuft"], ul.files li[data-fs="fertig"]').length;
+      var zahl = det.querySelector('summary .zahl');
+      if (zahl) zahl.textContent = dateien === 0 ? 'keine Datei' : (dateien === 1 ? '1 Datei' : dateien + ' Dateien');
+      if (dateien === 0) det.removeAttribute('data-fehlt');
+    });
+
+    // Elternzeile der Objektgruppe:
+    //   Frage auf "Nein"  -> eine beantwortete Position, zaehlt als erledigt
+    //   Frage auf "Ja"    -> nur Ueberschrift, gezaehlt werden die Objektpositionen
+    Array.prototype.forEach.call(document.querySelectorAll('ul.docs > li[data-gruppe]'), function(li){
+      var key = li.getAttribute('data-id');
+      var st = li.querySelector('.doc-status');
+      var vor = vorStand[key] || { dateien: 0, erledigt: false };
+      var vorText = vor.dateien ? (vor.dateien === 1 ? '1 Datei' : vor.dateien + ' Dateien') + ' bereits übertragen' : '';
+      if (hatBestand[key] === true && (objekte[key] || []).length){
+        var offene = li.querySelectorAll('.objekt ul.docs > li[data-state="offen"], .objekt ul.docs > li[data-state="teilweise"]').length;
+        li.setAttribute('data-state', offene ? 'offen' : 'angekommen');
+        if (st) st.textContent = vorText;
+      } else if (hatBestand[key] === true){
+        // "Ja" ohne neue Blöcke: Stand aus früheren Besuchen
+        li.setAttribute('data-state', vor.erledigt ? 'angekommen' : 'offen');
+        if (st) st.textContent = vorText;
+        gesamt++; if (vor.erledigt) erledigt++;
+      } else if (hatBestand[key] === false){
+        li.setAttribute('data-state', 'nichtvorhanden');
+        if (st) st.textContent = T.objektKeine;
+        gesamt++; erledigt++;
+      } else {
+        li.setAttribute('data-state', 'offen');
+        if (st) st.textContent = T.bitteBeantworten;
+        gesamt++;
+      }
+    });
+
+    el.fzahl.textContent = erledigt;
+    el.fges.textContent = gesamt;
+    el.frest.textContent = (gesamt - erledigt) === 0 ? T.nichtsOffen : (gesamt - erledigt) + ' ' + T.offen;
+    el.fbar.style.width = Math.round(erledigt / (gesamt || 1) * 100) + '%';
+
+    if (!offen.length) fehlerZeigen([]);
+    erfolgText(eintraege.filter(function(e){ return e.status === 'fertig'; }).length, offen.length, gesamt - erledigt);
+  }
+
+  function dateien(n){ return n === 1 ? '1 Datei' : n + ' Dateien'; }
+  function liegen(n){ return n === 1 ? ' liegt bei uns. ' : ' liegen bei uns. '; }
+
+  function erfolgText(gesendet, wartend, fehlend){
+    if (gesendet === 0){ el.erfolg.hidden = true; return; }
+    el.erfolg.hidden = false;
+    if (wartend > 0){
+      el.erfolgtitel.textContent = 'Teilweise angekommen';
+      el.erfolgtext.textContent = dateien(gesendet) + liegen(gesendet) + dateien(wartend) +
+        (wartend === 1 ? ' ist ausgewählt, aber noch nicht übertragen.' : ' sind ausgewählt, aber noch nicht übertragen.');
+    } else if (fehlend > 0){
+      el.erfolgtitel.textContent = 'Angekommen';
+      el.erfolgtext.textContent = dateien(gesendet) + liegen(gesendet) + 'Offen sind noch ' +
+        (fehlend === 1 ? '1 Position.' : fehlend + ' Positionen.');
+    } else {
+      el.erfolgtitel.textContent = 'Vollständig';
+      el.erfolgtext.textContent = T.vollstaendigText;
+    }
+  }
+
+  /* ---------- Übertragung ---------- */
+  function springenZu(ziel, rahmen){
+    if (!ziel) return;
+    var det = ziel.closest ? ziel.closest('details') : null;
+    if (det) det.open = true;
+    var box = rahmen || ziel;
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    box.classList.remove('markiert');
+    void box.offsetWidth;                       // Animation neu starten
+    box.classList.add('markiert');
+    setTimeout(function(){ box.classList.remove('markiert'); }, 2600);
+    if (ziel.focus) setTimeout(function(){ ziel.focus({ preventScroll: true }); }, 260);
+  }
+
+  function fehlerZeigen(liste){
+    el.fehlerliste.innerHTML = '';
+    if (!liste.length){ el.fehlerkasten.hidden = true; return; }
+    liste.forEach(function(f){
+      var li = document.createElement('li');
+      var text = document.createElement('span');
+      text.textContent = f.text;
+      var knopf = document.createElement('button');
+      knopf.type = 'button';
+      knopf.className = 'springen';
+      knopf.textContent = 'Zur Fehlerstelle';
+      knopf.addEventListener('click', function(){ springenZu(f.ziel, f.rahmen); });
+      li.appendChild(text); li.appendChild(knopf);
+      el.fehlerliste.appendChild(li);
+    });
+    el.fehlerkasten.hidden = false;
+  }
+
+  function adressenGeprueft(){
+    var offen = [];
+    Array.prototype.forEach.call(document.querySelectorAll('.objekt'), function(det, i){
+      if (det.offsetParent === null) return;
+      var bereit = det.querySelectorAll('ul.files li[data-fs="bereit"]').length;
+      var eingabe = det.querySelector('input[type=text]');
+      var hatAdresse = eingabe && eingabe.value.trim();
+      if (bereit && !hatAdresse){
+        det.setAttribute('data-fehlt', '1');
+        det.open = true;
+        if (eingabe) eingabe.setAttribute('aria-invalid', 'true');
+        offen.push({
+          text: (det.getAttribute('data-block') || T.blockStandard) + ' ' + (i + 1) + ': Angabe fehlt, ' + (bereit === 1 ? '1 Datei wartet.' : bereit + ' Dateien warten.'),
+          ziel: eingabe,
+          rahmen: det
+        });
+      }
+    });
+    fehlerZeigen(offen);
+    if (offen.length){
+      sagen(T.objektAdresseEintragen);
+      el.absub.textContent = offen.length === 1
+        ? T.objektFehltEiner
+        : T.objektFehltMehrere.replace('{N}', offen.length);
+      springenZu(offen[0].ziel, offen[0].rahmen);
+      return false;
+    }
+    return true;
+  }
+
+  function uebertragen(){
+    var offen = eintraege.filter(function(e){ return e.status === 'bereit'; });
+    if (!offen.length) return;
+    if (!adressenGeprueft()) return;
+    offen.forEach(function(e){ e.docTitel = docTitel(e.docId); });
+
+    laeuft = true;
+    el.send.disabled = true;
+    el.send.setAttribute('aria-busy', 'true');
+    var gesamt = offen.length, index = 0;
+
+    function naechste(){
+      if (index >= gesamt){
+        laeuft = false;
+        el.send.disabled = false;
+        el.send.removeAttribute('aria-busy');
+        sagen(gesamt === 1 ? 'Die Datei ist angekommen.' : 'Alle ' + gesamt + ' Dateien sind angekommen.');
+        aktualisieren();
+        return;
+      }
+      var e = offen[index];
+      var li = document.getElementById(e.id);
+      e.status = 'laeuft';
+      li.setAttribute('data-fs', 'laeuft');
+      li.querySelector('.fst').textContent = 'Wird übertragen, Datei ' + (index+1) + ' von ' + gesamt;
+      var xb = li.querySelector('.xbtn'); if (xb) xb.remove();
+      if (!li.querySelector('.pbar')){
+        var pb = document.createElement('span');
+        pb.className = 'pbar'; pb.innerHTML = '<i></i>';
+        li.appendChild(pb);
+      }
+      el.abtxt.textContent = 'Übertragung läuft';
+      el.absub.textContent = 'Datei ' + (index+1) + ' von ' + gesamt + '. ' + T.fensterOffen;
+      el.sendtext.textContent = 'Wird übertragen';
+
+      senden(e, function(ok, meldung){
+        var pbar = li.querySelector('.pbar'); if (pbar) pbar.remove();
+        if (ok){
+          e.status = 'fertig';
+          li.setAttribute('data-fs', 'fertig');
+          li.querySelector('.fst').textContent = 'Angekommen am ' + (meldung || '');
+          var t = document.createElement('span');
+          t.className = 'tick'; t.textContent = '✓';
+          li.querySelector('.rechts').appendChild(t);
+        } else {
+          e.status = 'bereit';
+          li.setAttribute('data-fs', 'fehler');
+          li.querySelector('.fst').textContent = meldung || T.unterbrochen;
+          if (!li.querySelector('.xbtn')){
+            var x = document.createElement('button');
+            x.type = 'button'; x.className = 'xbtn'; x.setAttribute('aria-label', 'Datei entfernen');
+            x.textContent = '×';
+            x.addEventListener('click', function(){ entfernen(e.id); });
+            li.querySelector('.rechts').appendChild(x);
+          }
+        }
+        index++;
+        aktualisieren();
+        naechste();
+      });
+    }
+    naechste();
+  }
+
+  /* Eine Datei je Aufruf. Der Zeitstempel kommt aus der Serverantwort, nicht aus der Uhr des Browsers. */
+  function serverText(err){
+    /* Apps Script stellt der Meldung "Error: " voran. Das gehört nicht in den Kundentext. */
+    var m = (err && err.message) ? String(err.message) : '';
+    return m.replace(/^Error:\s*/, '') || T.unterbrochen;
+  }
+
+  function senden(eintrag, fertig){
+    var reader = new FileReader();
+    reader.onerror = function(){ fertig(false, 'Die Datei konnte nicht gelesen werden.'); };
+    reader.onload = function(){
+      google.script.run
+        .withSuccessHandler(function(res){ fertig(true, res && res.zeit); })
+        .withFailureHandler(function(err){ fertig(false, serverText(err)); })
+        .uploadFile(TOKEN, {
+          name: eintrag.file.name,
+          mimeType: eintrag.file.type || 'application/octet-stream',
+          bytes: reader.result.split(',')[1],
+          unterlage: eintrag.docTitel || '',
+          key: eintrag.docId
+        });
+    };
+    reader.readAsDataURL(eintrag.file);
+  }
+
+  /* ---------- Ereignisse ---------- */
+  seiteAufbauen();
+
+  document.addEventListener('click', function(ev){
+    var b = ev.target.closest ? ev.target.closest('[data-pick], [data-cam], [data-fehlt]') : null;
+    if (!b) return;
+    if (b.hasAttribute('data-pick')){ zielDoc = b.getAttribute('data-pick'); el.fileinput.click(); }
+    else if (b.hasAttribute('data-cam')){ zielDoc = b.getAttribute('data-cam'); el.caminput.click(); }
+    else {
+      var key = b.getAttribute('data-fehlt');
+      if (nichtVorhanden[key]) zuruecknehmen(key); else grundFormular(key);
+    }
+  });
+  el.zone.addEventListener('click', function(){ zielDoc = 'weitere'; el.fileinput.click(); });
+  el.fileinput.addEventListener('change', function(){
+    if (this.files.length) aufnehmen(this.files, zielDoc);
+    this.value = '';
+  });
+  el.caminput.addEventListener('change', function(){
+    if (this.files.length) aufnehmen(this.files, zielDoc);
+    this.value = '';
+  });
+  el.send.addEventListener('click', uebertragen);
+
+  var tiefe = 0;
+  function dragZiel(ev){
+    var li = ev.target.closest ? ev.target.closest('ul.docs > li') : null;
+    return (li && !li.hasAttribute('data-gruppe')) ? li.getAttribute('data-id') : 'weitere';
+  }
+  ['dragenter','dragover'].forEach(function(t){
+    document.addEventListener(t, function(ev){
+      if (ev.dataTransfer && Array.prototype.indexOf.call(ev.dataTransfer.types || [], 'Files') === -1) return;
+      ev.preventDefault();
+      if (t === 'dragenter') tiefe++;
+      el.zone.setAttribute('data-drag', '1');
+      var li = ev.target.closest ? ev.target.closest('ul.docs > li') : null;
+      Array.prototype.forEach.call(document.querySelectorAll('ul.docs > li'), function(x){
+        x.style.background = (x === li) ? 'var(--marke-hell)' : '';
+      });
+    });
+  });
+  document.addEventListener('dragleave', function(){
+    tiefe = Math.max(0, tiefe - 1);
+    if (tiefe === 0) aufraeumen();
+  });
+  document.addEventListener('drop', function(ev){
+    ev.preventDefault();
+    tiefe = 0; aufraeumen();
+    if (ev.dataTransfer && ev.dataTransfer.files.length) aufnehmen(ev.dataTransfer.files, dragZiel(ev));
+  });
+  function aufraeumen(){
+    el.zone.removeAttribute('data-drag');
+    Array.prototype.forEach.call(document.querySelectorAll('ul.docs > li'), function(x){ x.style.background = ''; });
+  }
+
+  window.addEventListener('beforeunload', function(ev){
+    if (eintraege.some(function(e){ return e.status === 'bereit'; })){ ev.preventDefault(); ev.returnValue = ''; }
+  });
+
+  aktualisieren();
+
+  /* Zustand "Link nicht mehr gültig". In der Web-App entscheidet das die Vorlage. */
+  if (!GUELTIG){
+    document.querySelector('.hero h1').innerHTML = T.ungueltigHero;
+    document.querySelector('.hero .eyebrow').textContent = T.firma || '';
+    document.querySelector('.hero p.lead').textContent = T.ungueltigLead;
+    document.querySelector('.hero .meta').style.display = 'none';
+    document.getElementById('ungueltigView').hidden = false;
+    Array.prototype.forEach.call(
+      document.querySelectorAll('main.shell > section.card:not(#ungueltigView), #gruppen, .actionbar, .akzent, noscript'),
+      function(x){ x.hidden = true; x.style.display = 'none'; }
+    );
+  }
+
+})();
+</script>
+</body>
+</html>

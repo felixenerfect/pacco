@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base target="_top">
+<style>
+  body{font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#222; margin:0; padding:4px 2px}
+  label{display:block; font-weight:600; margin:10px 0 4px}
+  input,select{width:100%; box-sizing:border-box; padding:7px 8px; border:1px solid #c7ccd1; border-radius:4px; font-size:13px}
+  .reihe{display:flex; gap:10px} .reihe>div{flex:1}
+  .haken{display:flex; align-items:center; gap:8px; margin-top:14px; font-weight:400}
+  .haken input{width:auto}
+  button{margin-top:16px; background:#1f3a4d; color:#fff; border:0; border-radius:4px; padding:9px 16px; font-size:13px; cursor:pointer}
+  button:disabled{opacity:.6; cursor:default}
+  .ergebnis{margin-top:14px; padding:10px; background:#eef7f1; border-radius:4px; display:none; word-break:break-all}
+  .fehler{margin-top:14px; padding:10px; background:#fdecec; border-radius:4px; display:none}
+  small{color:#666}
+</style>
+</head>
+<body>
+  <div class="reihe">
+    <div><label for="vorname">Vorname</label><input id="vorname" autocomplete="off"></div>
+    <div><label for="nachname">Nachname</label><input id="nachname" autocomplete="off"></div>
+  </div>
+  <div class="reihe">
+    <div><label for="anrede">Anrede</label>
+      <select id="anrede"><option>Herr</option><option>Frau</option><option value="">keine</option></select></div>
+    <div><label for="ansprache">Ansprache</label>
+      <select id="ansprache"><option value="sie">Sie</option><option value="du">Du</option></select></div>
+  </div>
+  <label for="email">E-Mail des Kunden</label><input id="email" type="email" autocomplete="off">
+  <label for="vorgang">Vorgang <small>(z. B. Objektadresse)</small></label><input id="vorgang" autocomplete="off">
+  <label for="checkliste">Checkliste</label>
+  <select id="checkliste">
+    <? vorlagen.forEach(function (v) { ?><option><?= v ?></option><? }); ?>
+  </select>
+  <label class="haken"><input type="checkbox" id="einladen" checked>
+    <span id="einladenText"></span></label>
+  <button id="los">Fall anlegen</button>
+  <div class="ergebnis" id="ergebnis"></div>
+  <div class="fehler" id="fehler"></div>
+<script>
+  var MODUS = '<?= mailmodus ?>';
+  document.getElementById('ansprache').value = '<?= ansprache ?>' === 'du' ? 'du' : 'sie';
+  document.getElementById('einladenText').textContent =
+    MODUS === 'senden' ? 'Einladung sofort per Mail senden'
+    : MODUS === 'aus' ? 'Einladung: Mailmodus ist "aus", es wird nur der Link angezeigt'
+    : 'Einladung als Gmail-Entwurf anlegen';
+
+  document.getElementById('los').addEventListener('click', function () {
+    var knopf = this;
+    var d = {};
+    ['vorname', 'nachname', 'anrede', 'ansprache', 'email', 'vorgang', 'checkliste'].forEach(function (k) {
+      d[k] = document.getElementById(k).value;
+    });
+    d.einladen = document.getElementById('einladen').checked;
+    knopf.disabled = true;
+    document.getElementById('fehler').style.display = 'none';
+    google.script.run
+      .withSuccessHandler(function (r) {
+        var box = document.getElementById('ergebnis');
+        box.style.display = 'block';
+        box.textContent = 'Fall ' + r.fall_id + ' angelegt. ' + r.mail + '. ' + (r.link ? 'Link: ' + r.link : '');
+        knopf.textContent = 'Schließen';
+        knopf.disabled = false;
+        knopf.onclick = function () { google.script.host.close(); };
+      })
+      .withFailureHandler(function (e) {
+        var box = document.getElementById('fehler');
+        box.style.display = 'block';
+        box.textContent = String(e && e.message || e).replace(/^Error:\s*/, '');
+        knopf.disabled = false;
+      })
+      .fallAnlegen(d);
+  });
+</script>
+</body>
+</html>

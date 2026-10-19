@@ -1,0 +1,28 @@
+vorlage;gruppe;gruppe_untertitel;titel;hinweis;erwartet;gehoert_zu;frage;block_name;block_feld
+Finanzierung Privatkunde;Persönliche Unterlagen;Zu den Antragstellern;Selbstauskunft und Vermögensaufstellung;Ausgefüllt und unterschrieben;1;;;;
+Finanzierung Privatkunde;Persönliche Unterlagen;Zu den Antragstellern;Ausweisdokument;Vorder- und Rückseite;1;;;;
+Finanzierung Privatkunde;Persönliche Unterlagen;Zu den Antragstellern;Kontoauszüge (letzte 3 Monate);Gehaltskonto;3;;;;
+Finanzierung Privatkunde;Persönliche Unterlagen;Zu den Antragstellern;Lohnabrechnungen (letzte 3 Monate);;3;;;;
+Finanzierung Privatkunde;Persönliche Unterlagen;Zu den Antragstellern;Darlehensverträge (Leasing, Auto, privat);Falls vorhanden;1;;;;
+Finanzierung Privatkunde;Persönliche Unterlagen;Zu den Antragstellern;Immobilien im Bestand;;1;;Bestandsimmobilien vorhanden?;Objekt;Adresse des Objekts (Straße, Hausnummer, Ort)
+Finanzierung Privatkunde;Persönliche Unterlagen;Zu den Antragstellern;Mietverträge inklusive Mieterhöhungen;;1;Immobilien im Bestand;;;
+Finanzierung Privatkunde;Persönliche Unterlagen;Zu den Antragstellern;Grundbuchauszug;;1;Immobilien im Bestand;;;
+Finanzierung Privatkunde;Persönliche Unterlagen;Zu den Antragstellern;Darlehensvertrag;;1;Immobilien im Bestand;;;
+Finanzierung Privatkunde;Objektunterlagen;Zum Objekt der Finanzierung;Exposé;Falls vorhanden;1;;;;
+Finanzierung Privatkunde;Objektunterlagen;Zum Objekt der Finanzierung;Grundbuchauszug (nicht älter als 3 Monate);;1;;;;
+Finanzierung Privatkunde;Objektunterlagen;Zum Objekt der Finanzierung;Flurkarte;;1;;;;
+Finanzierung Privatkunde;Objektunterlagen;Zum Objekt der Finanzierung;Wohn- und Nutzflächenberechnung;;1;;;;
+Finanzierung Privatkunde;Objektunterlagen;Zum Objekt der Finanzierung;Grundrisse und Ansichten (mit Maßen);;1;;;;
+Finanzierung Privatkunde;Objektunterlagen;Zum Objekt der Finanzierung;Energieausweis;;1;;;;
+Finanzierung Privatkunde;Objektunterlagen;Zum Objekt der Finanzierung;Bilder innen und außen;Bad, Küche, Wohnzimmer, Heizraum, Fassade von allen Seiten;1;;;;
+Finanzierung Privatkunde;Objektunterlagen;Zum Objekt der Finanzierung;Kaufvertragsentwurf;Sobald vorhanden;1;;;;
+Finanzierung Selbstständige;Persönliche Unterlagen;Zu den Antragstellern;Selbstauskunft und Vermögensaufstellung;Ausgefüllt und unterschrieben;1;;;;
+Finanzierung Selbstständige;Persönliche Unterlagen;Zu den Antragstellern;Ausweisdokument;Vorder- und Rückseite;1;;;;
+Finanzierung Selbstständige;Persönliche Unterlagen;Zu den Antragstellern;Kontoauszüge (letzte 3 Monate);Privat- und Geschäftskonto;3;;;;
+Finanzierung Selbstständige;Unternehmen;Zur selbstständigen Tätigkeit;Jahresabschlüsse oder EÜR (letzte 2 Jahre);;2;;;;
+Finanzierung Selbstständige;Unternehmen;Zur selbstständigen Tätigkeit;Aktuelle BWA mit Summen- und Saldenliste;;1;;;;
+Finanzierung Selbstständige;Unternehmen;Zur selbstständigen Tätigkeit;Einkommensteuerbescheide (letzte 2 Jahre);;2;;;;
+Finanzierung Selbstständige;Objektunterlagen;Zum Objekt der Finanzierung;Exposé;Falls vorhanden;1;;;;
+Finanzierung Selbstständige;Objektunterlagen;Zum Objekt der Finanzierung;Grundbuchauszug (nicht älter als 3 Monate);;1;;;;
+Finanzierung Selbstständige;Objektunterlagen;Zum Objekt der Finanzierung;Energieausweis;;1;;;;
+Finanzierung Selbstständige;Objektunterlagen;Zum Objekt der Finanzierung;Kaufvertragsentwurf;Sobald vorhanden;1;;;;

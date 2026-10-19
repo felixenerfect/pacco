@@ -1,0 +1,35 @@
+vorlage;gruppe;gruppe_untertitel;titel;hinweis;erwartet;gehoert_zu;frage;block_name;block_feld
+Sanierungsfahrplan (iSFP);Haus;Zu Ihrem Haus;Grundrisse aller Geschosse;Gern mit Maßen, auch alte Pläne oder Skizzen helfen;1;;;;
+Sanierungsfahrplan (iSFP);Haus;Zu Ihrem Haus;Schnitte und Ansichten;Falls vorhanden;1;;;;
+Sanierungsfahrplan (iSFP);Haus;Zu Ihrem Haus;Baubeschreibung oder Bauantrag;Falls vorhanden, zeigt Baujahr und Aufbau von Wänden, Dach und Decken;1;;;;
+Sanierungsfahrplan (iSFP);Haus;Zu Ihrem Haus;Wohnflächenberechnung;Falls vorhanden;1;;;;
+Sanierungsfahrplan (iSFP);Haus;Zu Ihrem Haus;Energieausweis;Falls vorhanden;1;;;;
+Sanierungsfahrplan (iSFP);Haus;Zu Ihrem Haus;Fotos des Hauses von außen;Jede Hausseite ein Foto;4;;;;
+Sanierungsfahrplan (iSFP);Haus;Zu Ihrem Haus;Fotos der Fenster;Rahmen und Glas aus der Nähe, gern mit dem Stempel zwischen den Scheiben;2;;;;
+Sanierungsfahrplan (iSFP);Haus;Zu Ihrem Haus;Fotos von Dachboden und Keller;Oberste Decke oder Dachschräge und Kellerdecke, damit die Dämmung zu sehen ist;2;;;;
+Sanierungsfahrplan (iSFP);Heizung und Warmwasser;Zu Ihrer Heizung;Foto vom Typenschild der Heizung;Gut lesbar, mit Baujahr und Leistung;1;;;;
+Sanierungsfahrplan (iSFP);Heizung und Warmwasser;Zu Ihrer Heizung;Fotos vom Heizungsraum;Heizung, Warmwasserspeicher, Rohrleitungen;2;;;;
+Sanierungsfahrplan (iSFP);Heizung und Warmwasser;Zu Ihrer Heizung;Messprotokoll des Schornsteinfegers;Falls vorhanden, die letzte Messung (bei Wärmepumpen gibt es keins);1;;;;
+Sanierungsfahrplan (iSFP);Heizung und Warmwasser;Zu Ihrer Heizung;Wartungsprotokoll der Heizung;Falls vorhanden;1;;;;
+Sanierungsfahrplan (iSFP);Verbrauch;Zu Ihrem Energieverbrauch;Heizkosten- oder Brennstoffabrechnungen (letzte 3 Jahre);Je Jahr eine Datei;3;;;;
+Sanierungsfahrplan (iSFP);Verbrauch;Zu Ihrem Energieverbrauch;Stromabrechnung (letztes Jahr);;1;;;;
+Sanierungsfahrplan (iSFP);Bisherige Sanierungen;Was schon gemacht wurde;Bereits durchgeführte Sanierungen;;1;;Wurden schon Sanierungen durchgeführt (z. B. Fenster, Dämmung, Heizung)?;Maßnahme;Art der Maßnahme und Jahr
+Sanierungsfahrplan (iSFP);Bisherige Sanierungen;Was schon gemacht wurde;Rechnung oder Nachweis;;1;Bereits durchgeführte Sanierungen;;;
+Sanierungsfahrplan (iSFP);Bisherige Sanierungen;Was schon gemacht wurde;Fotos;Falls vorhanden;1;Bereits durchgeführte Sanierungen;;;
+Förderung Einzelmaßnahme;Eigentum;Zu Ihnen als Eigentümer;Grundbuchauszug oder anderer Eigentumsnachweis;;1;;;;
+Förderung Einzelmaßnahme;Eigentum;Zu Ihnen als Eigentümer;Unterschriebene Vollmacht für die Antragstellung;Die Vorlage erhalten Sie von uns;1;;;;
+Förderung Einzelmaßnahme;Geplante Maßnahmen;Was gemacht werden soll;Geplante Maßnahmen;;1;;Liegen schon Angebote für die geplanten Maßnahmen vor?;Maßnahme;Art der Maßnahme (z. B. Fenstertausch, Dachdämmung, Fassadendämmung)
+Förderung Einzelmaßnahme;Geplante Maßnahmen;Was gemacht werden soll;Angebot des Fachbetriebs;Mit Angaben zu Produkt, Menge und Dämmstärke bzw. U-Wert;1;Geplante Maßnahmen;;;
+Förderung Einzelmaßnahme;Geplante Maßnahmen;Was gemacht werden soll;Unterschriebener Vertrag mit Förderklausel;Falls schon vorhanden. Bitte erst unterschreiben, wenn wir das Angebot geprüft haben: Der Vertrag braucht eine aufschiebende oder auflösende Bedingung zur Förderzusage;1;Geplante Maßnahmen;;;
+Förderung Einzelmaßnahme;Geplante Maßnahmen;Was gemacht werden soll;Technisches Datenblatt der Produkte;Falls vorhanden;1;Geplante Maßnahmen;;;
+Förderung Einzelmaßnahme;Haus;Zu Ihrem Haus;Fotos der betroffenen Bauteile im jetzigen Zustand;Z. B. Fenster, Dach, Fassade;2;;;;
+Förderung Einzelmaßnahme;Haus;Zu Ihrem Haus;Nachweis des Baujahrs;Z. B. Bauantrag, Baugenehmigung oder Kaufvertrag;1;;;;
+Förderung Einzelmaßnahme;Haus;Zu Ihrem Haus;Sanierungsfahrplan (iSFP);Falls vorhanden, kann die Förderung erhöhen;1;;;;
+Energieausweis;Haus;Zu Ihrem Haus;Nachweis des Baujahrs;Falls vorhanden: Bauantrag, Baugenehmigung oder Kaufvertrag;1;;;;
+Energieausweis;Haus;Zu Ihrem Haus;Grundrisse aller Geschosse;Gern mit Maßen, für den Bedarfsausweis nötig;1;;;;
+Energieausweis;Haus;Zu Ihrem Haus;Wohnflächenberechnung;Falls vorhanden;1;;;;
+Energieausweis;Haus;Zu Ihrem Haus;Foto der Hausansicht;Von vorn, das Foto kommt auf den Ausweis;1;;;;
+Energieausweis;Haus;Zu Ihrem Haus;Bisheriger Energieausweis;Falls vorhanden;1;;;;
+Energieausweis;Heizung und Verbrauch;Zu Heizung und Verbrauch;Foto vom Typenschild der Heizung;Gut lesbar, mit Baujahr und Leistung;1;;;;
+Energieausweis;Heizung und Verbrauch;Zu Heizung und Verbrauch;Heizkosten- oder Brennstoffabrechnungen (letzte 3 Jahre);Für den Verbrauchsausweis: 3 zusammenhängende Jahre, je Jahr eine Datei;3;;;;
+Energieausweis;Heizung und Verbrauch;Zu Heizung und Verbrauch;Nachweise über Modernisierungen;Falls vorhanden: Rechnungen zu Fenstern, Dämmung oder Heizung;1;;;;

@@ -1,0 +1,12 @@
+# Persönliche Konfiguration und Zugangsdaten, nie ins Repo
+apps-script/Konfig.gs
+.clasp.json
+.clasprc.json
+ausgabe/
+einrichtung.local.md
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
+*.bak
